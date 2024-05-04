@@ -15,7 +15,7 @@
   max-width: var(--max-width);
   width: 100%;
   z-index: 2;
-  font-family: var(--font-mono);
+  // font-family: var(--font-mono);
 }
 
 .description a {
@@ -36,7 +36,7 @@
 
 .code {
   font-weight: 700;
-  font-family: var(--font-mono);
+  // font-family: var(--font-mono);
 }
 
 .grid {
@@ -210,15 +210,15 @@
   }
 }
 
-@media (prefers-color-scheme: dark) {
-  .vercelLogo {
-    filter: invert(1);
-  }
+// @media (prefers-color-scheme: dark) {
+//   .vercelLogo {
+//     filter: invert(1);
+//   }
 
-  .logo {
-    filter: invert(1) drop-shadow(0 0 0.3rem #ffffff70);
-  }
-}
+//   .logo {
+//     filter: invert(1) drop-shadow(0 0 0.3rem #ffffff70);
+//   }
+// }
 
 @keyframes rotate {
   from {

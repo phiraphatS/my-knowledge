@@ -1,0 +1,36 @@
+.gradiantTextDarkMode {
+    width: fit-content;
+    background: linear-gradient(25deg, rgba(255,187,228,1) 0%, rgba(119,232,255,1) 100%);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.gradiantTextLightMode {
+    width: fit-content;
+    background: linear-gradient(25deg, rgb(188, 109, 156) 0%, rgb(96, 99, 255) 100%);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.imgBox {
+    margin-bottom: 2rem;
+    position: relative;
+    height: 4rem;
+}
+
+.contentBox {
+    width: 100%;
+    max-width: 20rem;
+    padding: 3rem;
+    overflow: hidden;
+    height: 100%;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+
+    &:hover {
+        .imgBox {
+            transform: scale(1.1);
+            transition: all 0.2s ease-in-out;
+        }
+    }
+}
