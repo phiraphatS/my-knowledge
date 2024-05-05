@@ -132,19 +132,26 @@ const mockUpData = {
                 name: 'root',
                 children: [
                     {
-                        name: 'parent',
+                        name: 'src',
                         children: [
-                            { name: 'child1' },
-                            { name: 'child2' }
+                            { 
+                                name: 'app',
+                                children: [
+                                    { name: 'app.controller.ts' },
+                                    { name: 'app.module.ts' },
+                                    { name: 'app.service.ts' },
+                                    { name: 'main.ts' },
+                                ]
+                            },
                         ]
                     },
                     {
-                        name: 'parent',
+                        name: 'node_modules',
                         children: [
-                            { name: 'child1' },
-                            { name: 'child2' }
+                            { name: '@nest' },
+                            { name: '@other' },
                         ]
-                    },
+                    }
                     // ... more data
                 ]
             }

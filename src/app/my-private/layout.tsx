@@ -55,6 +55,7 @@ export default function WithSubnavigation({ children }: { children: React.ReactN
                 top={0}
                 left={0}
                 w={'full'}
+                zIndex={999}
                 position={'fixed'}
                 background={useColorModeValue('white', 'gray.800')}
             >
