@@ -27,80 +27,105 @@ import {
 } from '@chakra-ui/icons'
 import React from 'react';
 import styles from '@/styles/theme.module.scss';
+import { useRouter } from 'next/navigation';
 
 export default function WithSubnavigation({ children }: { children: React.ReactNode }) {
     const { isOpen, onToggle } = useDisclosure()
     const { colorMode, toggleColorMode } = useColorMode()
+    const router = useRouter()
+
+    const handleToggle = () => {
+        toggleColorMode()
+        // find mod on queryString and replace it to the current colorMode value
+        const newMod = colorMode;
+        const url = new URL(window.location.href);
+        // check if mod exist
+        if (url.searchParams.get('mod')) {
+            url.searchParams.set('mod', newMod);
+        } else {
+            url.searchParams.append('mod', newMod);
+        }
+
+        router.replace(url.toString(), { scroll: false });
+    }
 
     return (
-        <Box>
-            <Flex
-                bg={useColorModeValue('white', 'gray.800')}
-                color={useColorModeValue('gray.600', 'white')}
-                minH={'60px'}
-                py={{ base: 2 }}
-                px={{ base: 4 }}
-                borderBottom={1}
-                borderStyle={'solid'}
-                borderColor={useColorModeValue('gray.200', 'gray.900')}
-                align={'center'}>
-                {/* Hamberger Icon */}
+        <Box h={'100vh'} paddingTop={'60px'}>
+            <Box
+                top={0}
+                left={0}
+                w={'full'}
+                position={'fixed'}
+                background={useColorModeValue('white', 'gray.800')}
+            >
                 <Flex
-                    flex={{ base: 1, md: 'auto' }}
-                    ml={{ base: -2 }}
-                    display={{ base: 'flex', md: 'none' }}>
-                    <IconButton
-                        onClick={onToggle}
-                        icon={isOpen ? <CloseIcon w={3} h={3} /> : <HamburgerIcon w={5} h={5} />}
-                        variant={'ghost'}
-                        aria-label={'Toggle Navigation'}
-                    />
-                </Flex>
-
-                {/* Logo */}
-                <Flex flex={{ base: 1 }} justify={{ base: 'center', md: 'start' }}>
-                    <VStack
-                        gap={0}
-                        className={styles.logo}>
-                        <Text
-                            textAlign={useBreakpointValue({ base: 'center', md: 'left' })}
-                            fontFamily={'heading'}
-                            color={useColorModeValue('gray.800', 'white')}>
-                            My <b>Private Code</b>
-                        </Text>
-                        <span>Architecture</span>
-                    </VStack>
-
-                    {/* Navigation Manu Desktop */}
-                    <Flex display={{ base: 'none', md: 'flex' }} ml={10}>
-                        <DesktopNav />
+                    minH={'60px'}
+                    py={{ base: 2 }}
+                    px={{ base: 4 }}
+                    borderBottom={1}
+                    borderStyle={'solid'}
+                    borderColor={useColorModeValue('gray.200', 'gray.900')}
+                    align={'center'}
+                >
+                    {/* Hamberger Icon */}
+                    <Flex
+                        flex={{ base: 1, md: 'auto' }}
+                        ml={{ base: -2 }}
+                        display={{ base: 'flex', md: 'none' }}>
+                        <IconButton
+                            onClick={onToggle}
+                            icon={isOpen ? <CloseIcon w={3} h={3} /> : <HamburgerIcon w={5} h={5} />}
+                            variant={'ghost'}
+                            aria-label={'Toggle Navigation'}
+                        />
                     </Flex>
-                </Flex>
 
-                {/* Action Button */}
-                <Stack
-                    flex={{ base: 1, md: 0 }}
-                    justify={'flex-end'}
-                    direction={'row'}
-                    spacing={6}>
-                    <Button 
-                        onClick={toggleColorMode}
-                        bg='background.100'
-                    >
-                        {colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
-                    </Button>
-                    <Button
-                        as={'a'}
-                        bg='background.100'
-                        display={{ base: 'none', md: 'inline-flex' }}
-                        fontSize={'sm'}
-                        fontWeight={600}
-                        href={'#'}
+                    {/* Logo */}
+                    <Flex flex={{ base: 1 }} justify={{ base: 'center', md: 'start' }}>
+                        <VStack
+                            gap={0}
+                            className={styles.logo}>
+                            <Text
+                                textAlign={useBreakpointValue({ base: 'center', md: 'left' })}
+                                fontFamily={'heading'}
+                            // color={useColorModeValue('gray.800', 'white')}
+                            >
+                                My <b>Private Code</b>
+                            </Text>
+                            <span>Architecture</span>
+                        </VStack>
+
+                        {/* Navigation Manu Desktop */}
+                        <Flex display={{ base: 'none', md: 'flex' }} ml={10}>
+                            <DesktopNav />
+                        </Flex>
+                    </Flex>
+
+                    {/* Action Button */}
+                    <Stack
+                        flex={{ base: 1, md: 0 }}
+                        justify={'flex-end'}
+                        direction={'row'}
+                        spacing={6}>
+                        <Button
+                            onClick={handleToggle}
+                            bg='background.100'
                         >
-                        Contact Me
-                    </Button>
-                </Stack>
-            </Flex>
+                            {colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
+                        </Button>
+                        <Button
+                            as={'a'}
+                            bg='background.100'
+                            display={{ base: 'none', md: 'inline-flex' }}
+                            fontSize={'sm'}
+                            fontWeight={600}
+                            href={'#'}
+                        >
+                            Contact Me
+                        </Button>
+                    </Stack>
+                </Flex>
+            </Box>
 
             {/* Navigation Manu Mobile */}
             <Collapse in={isOpen} animateOpacity>
@@ -264,7 +289,7 @@ interface NavItem {
 const NAV_ITEMS: Array<NavItem> = [
     {
         label: 'Workshops',
-        href: '/dark/workshops',
+        href: '/my-private/workshops',
     },
     {
         label: 'Projects',

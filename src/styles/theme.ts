@@ -3,7 +3,7 @@ import type { StyleFunctionProps } from '@chakra-ui/styled-system'
 
 const config: ThemeConfig = {
     initialColorMode: 'dark',
-    useSystemColorMode: false,
+    useSystemColorMode: true,
 }
 
 export const theme = extendTheme({

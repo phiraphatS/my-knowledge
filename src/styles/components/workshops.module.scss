@@ -4,3 +4,12 @@
     padding: 2rem 2rem;
     max-width: 1200px;
 }
+
+.outerContainerRow {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 0 auto;
+    padding: 2rem 2rem;
+    max-width: 1200px;
+}

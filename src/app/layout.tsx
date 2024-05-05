@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import '@/styles/globals.scss';
 import { Providers } from '@/_helper/provider';
 import { fonts } from '@/_helper/font';
+import { ColorModeScript } from "@chakra-ui/react";
+import { theme } from '@/styles/theme'
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -16,7 +18,10 @@ export default function RootLayout({
   return (
     <html lang='en' className={fonts.rubik.variable}>
       <body>
-        <Providers>{children}</Providers>
+        <Providers>
+          {/* <ColorModeScript initialColorMode='dark' /> */}
+          {children}
+        </Providers>
       </body>
     </html>
   )
