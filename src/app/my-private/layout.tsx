@@ -50,7 +50,7 @@ export default function WithSubnavigation({ children }: { children: React.ReactN
     }
 
     return (
-        <Box h={'100vh'} paddingTop={'60px'}>
+        <Box minH={'100vh'} paddingTop={'60px'} background={useColorModeValue('white', 'gray.800')}>
             <Box
                 top={0}
                 left={0}
@@ -89,11 +89,12 @@ export default function WithSubnavigation({ children }: { children: React.ReactN
                             <Text
                                 textAlign={useBreakpointValue({ base: 'center', md: 'left' })}
                                 fontFamily={'heading'}
-                            // color={useColorModeValue('gray.800', 'white')}
+                                color={useColorModeValue('gray.800', 'white')}
                             >
                                 My <b>Private Code</b>
                             </Text>
-                            <span>Architecture</span>
+                            <Text as='span' color={useColorModeValue('gray.800', 'white')}>Architecture</Text>
+                            {/* <span>Architecture</span> */}
                         </VStack>
 
                         {/* Navigation Manu Desktop */}

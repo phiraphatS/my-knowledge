@@ -8,6 +8,7 @@ import SyntaxCode from '@/shared/components/syntax-highlighter'
 import Image from 'next/image'
 import MenuAndScrollPoint from '@/shared/components/menu-and-scroll-point'
 import TreeExample from '@/shared/components/tree-beared'
+import ParagraphEditor from '@/shared/components/paragraph-editor'
 
 interface PostComponentProps {
     params: { slug: string };
@@ -117,8 +118,22 @@ const mockUpData = {
         {
             type: 'syntax',
             content: (
-                `function test() {
-    console.log('Hello World')
+`'use client'
+
+import { ChakraProvider, createCookieStorageManager } from '@chakra-ui/react'
+import { theme } from '@/styles/theme'
+import { Suspense } from 'react'
+import Loading from './loading'
+
+const manager = createCookieStorageManager('chakra-color-mode')
+export function Providers({ children }: { children: React.ReactNode }) {
+  return (
+    <Suspense fallback={<Loading/>}>
+      <ChakraProvider theme={theme} colorModeManager={manager}>
+        {children}
+      </ChakraProvider>
+    </Suspense>
+  )
 }`
             )
         },
@@ -264,18 +279,9 @@ export default async function PostComponent({ searchParams, params }: PostCompon
 
                         const Results = contentTypeEl();
                         return (
-                            <Box
-                                p={4}
-                                w={'full'}
-                                borderRadius={10}
-                                transition={'all 0.3s'}
-                                _hover={{
-                                    bg: colorMode === 'dark' ? 'gray.900' : 'gray.100',
-                                    cursor: 'pointer'
-                                }}
-                            >
+                            <ParagraphEditor colorMode={colorMode}>
                                 {Results}
-                            </Box>
+                            </ParagraphEditor>
                         )
                     })}
                 </VStack>

@@ -2,6 +2,7 @@ import { Flex, HStack, Heading, Stack } from '@chakra-ui/react'
 import React from 'react'
 import styles from '@/styles/components/workshops.module.scss'
 import CardIconText from '@/shared/components/card-icon-text'
+import { cookies } from 'next/headers'
 
 export default function WorkshopComponent() {
   const mockUpData = [
@@ -17,11 +18,12 @@ export default function WorkshopComponent() {
     },
   ]
 
+  const colorMode = cookies().get('chakra-color-mode')?.value || 'dark';
   return (
     <Flex
       className={styles.outerContainer}
     >
-      <Heading as='h2' size='md' textAlign={{ base: 'center', md: 'left' }}>
+      <Heading as='h2' size='md' textAlign={{ base: 'center', md: 'left' }} color={colorMode === 'light' ? 'gray.600' : 'white'}>
         Workshops
       </Heading>
 
