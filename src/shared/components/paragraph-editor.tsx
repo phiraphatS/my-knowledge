@@ -1,8 +1,10 @@
 'use client';
 import { EditIcon, EmailIcon } from '@chakra-ui/icons';
 import { Box, Button, HStack, IconButton, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Stack, useDisclosure } from '@chakra-ui/react'
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import ImageCoverCard from './image-cover-card';
+import { BiLeftArrowAlt, BiRightArrowAlt } from 'react-icons/bi'
+import styles from '@/styles/components/workshops.module.scss'
 
 interface ParagraphEditorProps {
     children: React.ReactNode,
@@ -17,6 +19,23 @@ interface EditorDialogProps {
 
 function EditorDialog({ isOpen, onOpen, onClose }: EditorDialogProps) {
     const [selectedType, setSelectedType] = useState(null)
+    const scrollContainerRef = useRef<HTMLDivElement>(null);
+
+    const scrollLeft = () => {
+        if (!scrollContainerRef.current) return;
+        scrollContainerRef.current.scrollTo({
+            left: scrollContainerRef.current.scrollLeft - 250, // adjust scroll amount as needed
+            behavior: 'smooth'
+        });
+    };
+
+    const scrollRight = () => {
+        if (!scrollContainerRef.current) return;
+        scrollContainerRef.current.scrollTo({
+            left: scrollContainerRef.current.scrollLeft + 250, // adjust scroll amount as needed
+            behavior: 'smooth'
+        });
+    };
 
     const mockCardData = [
         {
@@ -52,43 +71,81 @@ function EditorDialog({ isOpen, onOpen, onClose }: EditorDialogProps) {
     ];
 
     return (
-        <Modal 
-            isOpen={isOpen} 
-            onClose={onClose} 
+        <Modal
+            isOpen={isOpen}
+            onClose={onClose}
             isCentered
             size={{ base: 'full', md: '4xl' }}
             motionPreset='slideInBottom'
         >
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>Paragraph Editor</ModalHeader>
-          {/* <ModalCloseButton /> */}
-          <ModalBody
-            overflow={'hidden'}
-          >
-            <Stack 
-                alignItems='stretch' 
-                gap={10} 
-                direction={{ base: 'column', md: 'row'}}
-                width={'max-content'}>
+            <ModalOverlay />
+            <ModalContent>
+                <ModalHeader>Paragraph Editor</ModalHeader>
+                {/* <ModalCloseButton /> */}
+                <ModalBody>
+                    <Box
+                        ref={scrollContainerRef}
+                        className={styles['fade-wrapper']}
+                        overflow={'hidden'}
+                        marginLeft={'5rem'}
+                        marginRight={'5rem'}>
+                        <Stack
+                            alignItems='stretch'
+                            gap={10}
+                            direction={{ base: 'column', md: 'row' }}
+                            width={'max-content'}>
 
-                {mockCardData.map((props) => (
-                    <ImageCoverCard {...props}/>
-                ))}
-            </Stack>
-          </ModalBody>
+                            {mockCardData.map((props) => (
+                                <ImageCoverCard {...props} />
+                            ))}
+                        </Stack>
+                    </Box>
 
-          <ModalFooter>
-            <Button colorScheme='red' mr={3} onClick={onClose}>
-              Delete
-            </Button>
-            <Button colorScheme='blue' mr={3} onClick={onClose}>
-              Close
-            </Button>
-            {/* <Button variant='ghost'>Secondary Action</Button> */}
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
+                    <Box
+                        backgroundColor={'gray.900'}
+                        borderRadius={'50%'}
+                        cursor={'pointer'}
+                        p={4}
+                        left={2}
+                        top={'50%'}
+                        position={'absolute'}
+                        _hover={{
+                            backgroundColor: 'gray.600'
+                        }}
+                        onClick={scrollLeft}
+                    >
+                        <BiLeftArrowAlt fontSize={25} />
+                    </Box>
+
+                    <Box
+                        backgroundColor={'gray.900'}
+                        borderRadius={'50%'}
+                        cursor={'pointer'}
+                        p={4}
+                        right={2}
+                        top={'50%'}
+                        position={'absolute'}
+                        _hover={{
+                            backgroundColor: 'gray.600'
+                        }}
+                        onClick={scrollRight}
+                    >
+                        <BiRightArrowAlt fontSize={25} />
+                    </Box>
+
+                </ModalBody>
+
+                <ModalFooter>
+                    <Button colorScheme='red' mr={3} onClick={onClose}>
+                        Delete
+                    </Button>
+                    <Button colorScheme='blue' mr={3} onClick={onClose}>
+                        Close
+                    </Button>
+                    {/* <Button variant='ghost'>Secondary Action</Button> */}
+                </ModalFooter>
+            </ModalContent>
+        </Modal>
     )
 }
 

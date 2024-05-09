@@ -30,7 +30,7 @@ export default function ImageCoverCard({ preview, title, description }: ImageCov
                 overflow={'hidden'}
                 cursor={'pointer'}
                 _hover={{
-                    boxShadow: '2xl',
+                    boxShadow: 'xl',
                 }}>
                 <Box
                     position={'relative'}
