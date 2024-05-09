@@ -11,6 +11,7 @@ import {
     useColorModeValue,
 } from '@chakra-ui/react'
 import styles from '@/styles/sub-components/card-icon-text.module.scss'
+import { useRouter } from 'next/navigation'
 
 interface CardIconTextProps {
     preview: string
@@ -19,7 +20,12 @@ interface CardIconTextProps {
 }
 
 export default function CardIconText({ preview, title, description }: CardIconTextProps) {
+    const router = useRouter();
     const gradiantTextColor = useColorModeValue(styles.gradiantTextLightMode, styles.gradiantTextDarkMode)
+
+    const handleNavigation = () => {
+        router.push('/my-private/workshops/post?postid=1')
+    }
 
     return (
         <Center py={6}>
@@ -29,6 +35,7 @@ export default function CardIconText({ preview, title, description }: CardIconTe
                 bg={useColorModeValue('white', 'gray.900')}
                 boxShadow={'xl'}
                 rounded={'md'}
+                onClick={handleNavigation}
                 _hover={{ 
                     boxShadow: '2xl',
                 }}>
