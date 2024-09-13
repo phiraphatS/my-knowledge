@@ -1,6 +1,6 @@
 'use client';
 import { EditIcon, EmailIcon } from '@chakra-ui/icons';
-import { Box, Button, HStack, IconButton, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Stack, useDisclosure } from '@chakra-ui/react'
+import { Box, Button, HStack, IconButton, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Stack, useColorModeValue, useDisclosure } from '@chakra-ui/react'
 import React, { useRef, useState } from 'react'
 import ImageCoverCard from './image-cover-card';
 import { BiLeftArrowAlt, BiRightArrowAlt } from 'react-icons/bi'
@@ -13,11 +13,10 @@ interface ParagraphEditorProps {
 
 interface EditorDialogProps {
     isOpen: boolean,
-    onOpen: () => void,
     onClose: () => void
 }
 
-function EditorDialog({ isOpen, onOpen, onClose }: EditorDialogProps) {
+function EditorDialog({ isOpen, onClose }: EditorDialogProps) {
     const [selectedType, setSelectedType] = useState(null)
     const scrollContainerRef = useRef<HTMLDivElement>(null);
 
@@ -44,27 +43,27 @@ function EditorDialog({ isOpen, onOpen, onClose }: EditorDialogProps) {
             description: 'Past you function code to the editor and see the magic happen',
         },
         {
-            preview: '/assets/image-syntax.png',
+            preview: '/assets/image-title.png',
             title: 'Header',
             description: 'provide a header to your paragraph',
         },
         {
-            preview: '/assets/image-syntax.png',
+            preview: '/assets/image-text.png',
             title: 'Text',
             description: 'Write your paragraph here',
         },
         {
-            preview: '/assets/image-syntax.png',
+            preview: '/assets/image-picture.png',
             title: 'Image',
             description: 'Add an image to your paragraph',
         },
         {
-            preview: '/assets/image-syntax.png',
+            preview: '/assets/image-code.png',
             title: 'Code',
             description: 'Add code snippet to your paragraph',
         },
         {
-            preview: '/assets/image-syntax.png',
+            preview: '/assets/image-treenode.png',
             title: 'Tree Node',
             description: 'Show your data in tree structure',
         },
@@ -91,7 +90,7 @@ function EditorDialog({ isOpen, onOpen, onClose }: EditorDialogProps) {
                         marginRight={'5rem'}>
                         <Stack
                             alignItems='stretch'
-                            gap={10}
+                            // gap={10}
                             direction={{ base: 'column', md: 'row' }}
                             width={'max-content'}>
 
@@ -102,7 +101,7 @@ function EditorDialog({ isOpen, onOpen, onClose }: EditorDialogProps) {
                     </Box>
 
                     <Box
-                        backgroundColor={'gray.900'}
+                        display={{ base: 'none', md: 'block' }}
                         borderRadius={'50%'}
                         cursor={'pointer'}
                         p={4}
@@ -110,7 +109,7 @@ function EditorDialog({ isOpen, onOpen, onClose }: EditorDialogProps) {
                         top={'50%'}
                         position={'absolute'}
                         _hover={{
-                            backgroundColor: 'gray.600'
+                            backgroundColor: useColorModeValue('gray.100', 'gray.900'),
                         }}
                         onClick={scrollLeft}
                     >
@@ -118,7 +117,7 @@ function EditorDialog({ isOpen, onOpen, onClose }: EditorDialogProps) {
                     </Box>
 
                     <Box
-                        backgroundColor={'gray.900'}
+                        display={{ base: 'none', md: 'block' }}
                         borderRadius={'50%'}
                         cursor={'pointer'}
                         p={4}
@@ -126,7 +125,7 @@ function EditorDialog({ isOpen, onOpen, onClose }: EditorDialogProps) {
                         top={'50%'}
                         position={'absolute'}
                         _hover={{
-                            backgroundColor: 'gray.600'
+                            backgroundColor: useColorModeValue('gray.100', 'gray.900'),
                         }}
                         onClick={scrollRight}
                     >
@@ -151,6 +150,14 @@ function EditorDialog({ isOpen, onOpen, onClose }: EditorDialogProps) {
 
 export default function ParagraphEditor({ children, colorMode }: ParagraphEditorProps) {
     const { isOpen, onOpen, onClose } = useDisclosure()
+    const protectFrontElement = (e: any) => {
+        const checkTextSelected = window.getSelection() || "";
+        if (checkTextSelected.toString().length > 0) {
+            return;
+        }
+
+        onOpen();
+    }
 
     return (
         <Box
@@ -160,7 +167,7 @@ export default function ParagraphEditor({ children, colorMode }: ParagraphEditor
             transition={'all 0.3s'}
             color={colorMode === 'dark' ? 'gray.100' : 'gray.900'}
             position={'relative'}
-            onClick={onOpen}
+            onClick={protectFrontElement}
             _hover={{
                 bg: colorMode === 'dark' ? 'gray.900' : 'gray.100',
                 cursor: 'pointer',
@@ -182,7 +189,7 @@ export default function ParagraphEditor({ children, colorMode }: ParagraphEditor
             </HStack>
             {children}
 
-            <EditorDialog isOpen={isOpen} onOpen={onOpen} onClose={onClose} />
+            <EditorDialog isOpen={isOpen} onClose={onClose} />
         </Box>
     )
 }

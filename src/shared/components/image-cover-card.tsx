@@ -20,29 +20,30 @@ interface ImageCoverCardProps {
 export default function ImageCoverCard({ preview, title, description }: ImageCoverCardProps) {
 
     return (
-        <Center py={6} alignSelf={'stretch'}>
+        <Center py={8} px={3} alignSelf={'stretch'}>
             <Box
-                w={{ base: '95%', md: '15rem' }}
+                w={{ base: '100%', md: '15rem' }}
                 h={'100%'}
                 // bg={useColorModeValue('white', 'gray.900')}
-                // boxShadow={'xl'}
+                boxShadow={'xl'}
                 rounded={'md'}
                 overflow={'hidden'}
                 cursor={'pointer'}
                 _hover={{
-                    boxShadow: 'xl',
+                    // boxShadow: 'xl',
+                    bg: useColorModeValue('gray.100', 'gray.900'),
                 }}>
                 <Box
                     position={'relative'}
                     w={'full'}
+                    pt={'60%'}
                     maxW={'20rem'}
-                    h={'10rem'}
                 >
                     <Image
                         src={preview}
                         alt={'preview'}
                         layout='fill'
-                        objectFit='contain'
+                        objectFit='cover'
                         priority={true}
                     />
                 </Box>

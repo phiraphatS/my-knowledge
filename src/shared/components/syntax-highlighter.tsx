@@ -4,6 +4,7 @@ import copy from 'copy-to-clipboard';
 import React, { useState } from 'react'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { vscDarkPlus as testCss } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import styles from '@/styles/sub-components/syntax-highlighter.module.scss';
 
 interface PostComponentProps {
     content: string;
@@ -14,7 +15,8 @@ export default function SyntaxCode({ content }: PostComponentProps) {
     const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout | null>(null);
     const toast = useToast()
     
-    const handleCopy = () => {
+    const handleCopy = (e: any) => {
+        e.stopPropagation();
         // copy to clipboard
         copy(content);
         // show toast
@@ -50,7 +52,19 @@ export default function SyntaxCode({ content }: PostComponentProps) {
                     {copied ? 'Copied!' : 'Copy'}
                 </Button>
             </HStack>
-            <SyntaxHighlighter language="typescript" style={testCss}>
+            <SyntaxHighlighter 
+                language="typescript" 
+                style={testCss} 
+                onClick={(e: any) => {
+                    const checkTextSelected = window.getSelection() || "";
+                    if (checkTextSelected.toString().length > 0) {
+                        // Cancel the click event
+                        e.preventDefault();
+                        e.stopPropagation()
+                        return;
+                    }
+                }}
+                className={styles.syntax_box}>
                 {content}
             </SyntaxHighlighter>
         </Flex>

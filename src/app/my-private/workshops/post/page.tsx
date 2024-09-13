@@ -228,7 +228,7 @@ export default async function PostComponent({ searchParams, params }: PostCompon
                             }
 
                             if (type === "text") {
-                                return <Text> {anyVariable} </Text>
+                                return <Text className='text'> {anyVariable} </Text>
                             }
 
                             if (type === "header") {
@@ -243,7 +243,7 @@ export default async function PostComponent({ searchParams, params }: PostCompon
                             }
 
                             if (type === "code") {
-                                return <Code>{anyVariable}</Code>
+                                return <Code className='text'>{anyVariable}</Code>
                             }
 
                             if (type === "syntax") {
@@ -254,7 +254,7 @@ export default async function PostComponent({ searchParams, params }: PostCompon
 
                             if (type === "info" || type === "warning" || type === "error" || type === "success" || type === "loading") {
                                 return <Alert status={type}>
-                                    <AlertIcon />
+                                    <AlertIcon/>
                                     {anyVariable}
                                 </Alert>
                             }
